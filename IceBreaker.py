@@ -3,19 +3,17 @@ from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
 from langchain_core.output_parsers import StrOutputParser
-from third_parties.linkedin import scrape_linkedin_profile
 
+from third_parties.linkedin import scrape_linkedin_profile
+from agents.linkedin_lookup_agent import lookup as likedin_lookup_agent
 
 # ADDITIONAL PACKAGES
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-openai_api_key = os.getenv('OPENAI_KEY')
-
-
-if __name__ == '__main__':
-    print(os.getenv('OPENAI_KEY'))
+def ice_breaker_with(name:str) -> str:
+    linkedin_username = likedin_lookup_agent(name=name)
+    linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_username)
     
     summary_template = """
     
@@ -27,7 +25,6 @@ if __name__ == '__main__':
     summary_prompt_template = PromptTemplate(input_variables =["information"], template = summary_template)
     
     llm = ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo',openai_api_key=openai_api_key)
-    # llm = ChatOllama(model='mistral')
     
     # Criar a cadeia LLM (PromptTemplate + ChatOpenAI)
     chain = prompt=summary_prompt_template | llm |StrOutputParser()
@@ -38,3 +35,12 @@ if __name__ == '__main__':
     res = chain.invoke(input={"information": linkedin_data})
     
     print(res)
+
+
+
+if __name__ == '__main__':
+    load_dotenv()
+    openai_api_key = os.getenv('OPENAI_KEY')
+    
+    ice_breaker_with(name='Eduardo Inocencio')
+          
