@@ -13,4 +13,15 @@ O **Ice Breaker** é uma aplicação que utiliza inteligência artificial para g
 
 ## 🗂 Estrutura da Pasta
 
-ice_breaker/ │ ├── app.py # Arquivo principal da aplicação Flask. ├── IceBreaker.py # Contém a lógica principal do Ice Breaker. ├── tools/ # Diretório com funções auxiliares. │ └── tools.py # Contém funções para obter URLs de perfil. ├── templates/ # Diretório para templates HTML. │ └── index.html # Página principal da aplicação. ├── .env # Arquivo para variáveis de ambiente. └── README.md # Este arquivo.
+IceBreaker/
+│
+├── main.py                  # Arquivo principal para execução da aplicação
+├── IceBreaker.py            # Lógica principal do Ice Breaker
+├── requirements.txt         # Lista de dependências do projeto
+├── tools/                   # Pasta com ferramentas auxiliares
+│   ├── __init__.py         
+│   └── tools.py             # Funções auxiliares para busca de perfis
+├── templates/               # Pasta com os templates HTML
+│   └── index.html           # Página inicial da aplicação
+├── .env                     # Arquivo para variáveis de ambiente
+└── README.md                # Este arquivo
