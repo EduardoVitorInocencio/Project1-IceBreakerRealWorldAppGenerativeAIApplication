@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
+def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
     """
     Scrape information from LinkedIn profiles,
     Mannualy scrape the information from LinkedIn profile.
@@ -13,10 +13,10 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
     """
     
     if mock:
-        linkedin_profile_url = "https://gist.githubusercontent.com/EduardoVitorInocencio/7d64f82b4a5b48c1040fe65ac2b420b2/raw/22a6184f266f5ddbcef78992bb9fa41d9422301b/eduardo-inocencio.json"
+        linkedin_profile_url = "https://gist.githubusercontent.com/EduardoVitorInocencio/7d64f82b4a5b48c1040fe65ac2b420b2/raw/79ef40c72b2a50828971ef0d05ce95e035484ed8/eduardo-inocencio.json"
         response = requests.get(
             linkedin_profile_url,
-            timeout=20,
+            timeout=30,
         )
         
     else:
@@ -26,7 +26,7 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
             api_endpoint,
             params={"url": linkedin_profile_url},
             headers=headers_dic,
-            timeout=20,
+            timeout=30,
         )
     
     data = response.json()
@@ -40,6 +40,11 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = True):
         if v not in ([],"","",None)
         and k not in ["people_also_viewed","certifications"]
     }
+    if data.get("groups"):
+        for group_dict in data.get("groups"):
+            group_dict.pop("profile_pic_url")
+
+    return data
     
     return data
 
